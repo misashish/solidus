@@ -207,8 +207,12 @@ module Spree
     # @deprecated This method can only handle prices for currencies
     # @return [Array<Spree::Variant>] all variants with at least one option value
     def variants_and_option_values(current_currency = nil)
-      variants.includes(:option_values).active(current_currency).select do |variant|
-        variant.option_values.any?
+      if variants.count>0
+        variants.includes(:option_values).active(current_currency).select do |variant|
+          variant.option_values.any?
+        end
+      else
+        [master]
       end
     end
     deprecate variants_and_option_values: :variants_and_option_values_for,
