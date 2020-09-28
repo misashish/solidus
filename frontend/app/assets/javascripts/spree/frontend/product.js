@@ -57,7 +57,6 @@ Spree.ready(function($) {
   };
 
   Spree.updateVariantPrice = function(variant) {
-    alert("variant");
     var variantPrice = variant.data("price");
     if (variantPrice) {
       $(".price.selling").text(variantPrice);
