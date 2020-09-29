@@ -130,6 +130,7 @@ module Spree
     end
 
     def display_price(product_or_variant)
+      #debugger
       product_or_variant.price_for(current_pricing_options).to_html
     end
 

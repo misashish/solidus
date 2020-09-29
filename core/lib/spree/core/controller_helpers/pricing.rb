@@ -18,6 +18,7 @@ module Spree
         end
 
         def current_currency
+          #debugger
           current_pricing_options.currency
         end
         deprecate current_currency: :current_pricing_options, deprecator: Spree::Deprecation

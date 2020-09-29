@@ -62,6 +62,7 @@ module Spree
       else
         begin
           @line_item = @order.contents.add(variant, quantity)
+          #debugger
         rescue ActiveRecord::RecordInvalid => error
           @order.errors.add(:base, error.record.errors.full_messages.join(", "))
         end
@@ -117,6 +118,7 @@ module Spree
     end
 
     def assign_order
+      #debugger
       @order = current_order
       unless @order
         flash[:error] = t('spree.order_not_found')

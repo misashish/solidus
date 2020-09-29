@@ -33,6 +33,7 @@ module Spree
       # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
       #
       def self.from_line_item(line_item)
+        Rails.logger.info "-------------from_line_item #{line_item.currency}----------------"
         tax_address = line_item.order.try!(:tax_address)
         new(
           currency: line_item.currency || Spree::Config.currency,
@@ -53,8 +54,13 @@ module Spree
       # find the pricing based on the view context, having available current_store, current_spree_user, request.host_name, etc.
       # @return [Spree::Variant::PricingOptions] pricing options for pricing a line item
       def self.from_context(context)
+        if context.session[:currency].present?
+          curr = context.session[:currency]
+        else
+          curr = context.current_store.try!(:default_currency).presence || Spree::Config[:currency]
+        end
         new(
-          currency: context.current_store.try!(:default_currency).presence || Spree::Config[:currency],
+          currency: curr,
           country_iso: context.current_store.try!(:cart_tax_country_iso).presence
         )
       end

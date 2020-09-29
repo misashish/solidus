@@ -182,7 +182,9 @@ module Spree
     def set_pricing_attributes
       # If the legacy method #copy_price has been overridden, handle that gracefully
       return handle_copy_price_override if respond_to?(:copy_price)
-
+      Rails.logger.info "^^^^^^^^^^^^^^^^^^^set_pricing_attributes^^^^^#{variant.price_for(pricing_options)}^^^^^^^^^^^^^^^^and price #{price.nil?}"
+      #debugger
+      #self.order.currency = "USD"
       self.cost_price ||= variant.cost_price
       self.money_price = variant.price_for(pricing_options) if price.nil?
       true
